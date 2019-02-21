@@ -1,0 +1,113 @@
+HTML:
+<header>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+</header>
+
+<div class="container-fluid text-center">
+  <h1> Random Quote generator </h1>
+ 
+  <img id="picture1" src="https://images.unsplash.com/photo-1495305379050-64540d6ee95d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=88c11c17e5deb1e32ef66e69ef2abb8f&auto=format&fit=crop&w=1350&q=80"/>
+ <img id="picture2" src= "https://images.unsplash.com/photo-1525422847952-7f91db09a364?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce6622924dae3b9be067e1778a6b8707&auto=format&fit=crop&w=1365&q=80"/>
+  <img id="picture3" src="https://images.unsplash.com/photo-1485988412941-77a35537dae4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c9476459aede4e37dbbf9a2153d6377c&auto=format&fit=crop&w=1372&q=80"/>
+  
+  <br/>
+  <button class="btn btn-default" type="submit" id="newQuote">New Quote </button>
+  
+    <div class="quotes">
+      <span class="quote"></span>
+      <br/>
+      <span class="author"></span>
+    </div>
+  <a href="#" class="btn btn-default" id="tweet">Tweet !</a>
+<div class="footer text-center">
+    <h5>Copyright © ReM Designworks 2018. All Rights Reserved </h5>
+      <p>
+    <a href="mailto:renganathan.sekar@gmail.com">
+      <i class="fa fa-envelope fa-fw"></i>
+    </a>
+    <a href="https://github.com/SRenganathan" target='_blank'>
+      <i class="fa fa-github fa-fw"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/renganathan-sekar/" target='_blank'>
+      <i class="fa fa-linkedin"></i>
+    </a>
+    <a href="https://codepen.io/rangaji/" target='_blank'>
+      <i class="fa fa-codepen"></i>
+    </a>
+    <a href="https://www.freecodecamp.org/srenganathan" target='_blank'>
+    (<i class="fa fa-fire fa-fw"></i>)
+  </a>
+  </p>
+</div>  
+</div>  
+
+CSS:
+body{
+  font-family: Cookie;
+}
+
+h1{
+  font-size: 2em;
+}
+
+img{
+  border-radius: 10%;
+  margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+  height: 250px;
+}
+
+.btn{
+  margin-top: 1em;
+  font-size: 3.0em;
+  }
+.quotes{
+  margin-top: 0.75em;
+  font-size: 3.0em;
+  background-color: #ffccbd;
+  margin-right: auto;
+  margin-left: auto;
+  width: 67%;
+  border-radius: 5%;
+  padding: 20px;
+  height: auto;
+}
+
+.author{
+  font-size: 0.60em;
+  font-style: italic;
+  }
+
+
+JS:
+$(document).ready(function(){
+  var randomQuote; 
+  
+  var randomAuthor;
+  function getQuote(){
+    /**var quotes = ["안녕하세요", "Hallo" , "வணக்கம்"];
+    var authors= ["-- Korean", "-- German", "-- Tamil"];
+    randomNum = Math.floor((Math.random()*quotes.length));
+    randomQuote = quotes[randomNum]; 
+    randomAuthor = authors[randomNum];
+      $(".quote").text(randomQuote);
+      $(".author").text(randomAuthor);*/
+    
+    var url = "https://api.forismatic.com/api/1.0/?method=getQuote&key=XXXXX&format=jsonp&jsonp=?&lang=en";
+    $.getJSON(url, function(data){
+      $(".quote").html(data.quoteText); 
+      $(".author").html(data.quoteAuthor);
+      randomQuote = data.quoteText;
+      randomAuthor = data.quoteAuthor;
+    });
+   }
+    
+  $("#newQuote").on("click", function(){
+    getQuote();
+    });
+  $('#tweet').on("click", function(){
+    window.open("https://twitter.com/intent/tweet?text=" +randomQuote+ "~" + randomAuthor);
+   });
+ });
